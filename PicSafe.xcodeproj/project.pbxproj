@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		694C292E23194B82008D84E6 /* PassCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */; };
 		69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AAD823193C2A00707ACE /* AppDelegate.swift */; };
 		69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AADA23193C2A00707ACE /* ViewController.swift */; };
 		69D0AADE23193C2A00707ACE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AADC23193C2A00707ACE /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		065C680E66710A3D4C4D5EFA /* Pods_PicSafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PicSafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeInputViewController.swift; sourceTree = "<group>"; };
 		69D0AAD523193C2A00707ACE /* PicSafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicSafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D0AAD823193C2A00707ACE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69D0AADA23193C2A00707ACE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +52,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		694C292A23194B6E008D84E6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		69D0AACC23193C2A00707ACE = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +81,7 @@
 		69D0AAD723193C2A00707ACE /* PicSafe */ = {
 			isa = PBXGroup;
 			children = (
+				694C292A23194B6E008D84E6 /* ViewControllers */,
 				69D0AAD823193C2A00707ACE /* AppDelegate.swift */,
 				69D0AAE223193C2B00707ACE /* Assets.xcassets */,
 				69D0AAE723193C2B00707ACE /* Info.plist */,
@@ -88,7 +99,6 @@
 				96348297B1B9A586BA34DFF9 /* Pods-PicSafe.debug.xcconfig */,
 				A8321CDFAC95B5837A21C0A8 /* Pods-PicSafe.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -103,6 +113,7 @@
 				69D0AAD123193C2A00707ACE /* Sources */,
 				69D0AAD223193C2A00707ACE /* Frameworks */,
 				69D0AAD323193C2A00707ACE /* Resources */,
+				6EE22BB370C06066BDF51BFE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -182,6 +193,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6EE22BB370C06066BDF51BFE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -189,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				694C292E23194B82008D84E6 /* PassCodeInputViewController.swift in Sources */,
 				69D0AAE123193C2A00707ACE /* PicSafe.xcdatamodeld in Sources */,
 				69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */,
 				69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */,
