@@ -40,10 +40,16 @@ class PassCodeInputViewController: UIViewController {
   
   var contentView = UIView()
   var keyPadView = UIView()
+  var passCodeView = UIView()
+  var titleLabel = UILabel()
   var keysView1 = UIView()
   var keysView2 = UIView()
   var keysView3 = UIView()
   var keysView4 = UIView()
+  var inputView1 = UIView()
+  var inputView2 = UIView()
+  var inputView3 = UIView()
+  var inputView4 = UIView()
   let key1 = KeyView()
   let key2 = KeyView()
   let key3 = KeyView()
@@ -54,11 +60,12 @@ class PassCodeInputViewController: UIViewController {
   let key8 = KeyView()
   let key9 = KeyView()
   let key0 = KeyView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupContentView()
-    setupPassCodeView()
     setupKeypadView()
+    setupPassCodeView()
   }
   
   func setupContentView() {
@@ -69,7 +76,42 @@ class PassCodeInputViewController: UIViewController {
     contentView.Right == self.view.safeAreaLayoutGuide.Right
   }
   func setupPassCodeView() {
+    let passCodeViewContainer = UIView()
+    contentView.sv(passCodeViewContainer)
+    passCodeViewContainer.Top == contentView.Top + 100
+    passCodeViewContainer.Bottom == keyPadView.Top
+    passCodeViewContainer.fillHorizontally()
     
+    passCodeViewContainer.sv(titleLabel, passCodeView)
+    
+    titleLabel.centerHorizontally()
+    titleLabel.Top == passCodeViewContainer.Top + 20
+    titleLabel.text = "Enter Passcode"
+    titleLabel.textColor = .white
+    titleLabel.textAlignment = .center
+    titleLabel.font = titleLabel.font.withSize(20)
+    
+    
+    passCodeView.height(100).centerHorizontally().centerVertically()
+    
+    passCodeView.sv(inputView1.style(inputViewStyle), inputView2.style(inputViewStyle), inputView3.style(inputViewStyle), inputView4.style(inputViewStyle))
+    
+    
+    inputView1.Left == passCodeView.Left
+    inputView2.Left == inputView1.Right + 20
+    inputView3.Left == inputView2.Right + 20
+    inputView4.Left == inputView3.Right + 20
+    
+    passCodeView.Right == inputView4.Right
+    
+  }
+  
+  func inputViewStyle(view: UIView) {
+    view.height(10).width(10)
+    view.layer.borderColor = UIColor.white.cgColor
+    view.layer.borderWidth = 0.5
+    view.layer.cornerRadius = 5
+    view.centerVertically()
   }
   
   func setupKeypadView() {
