@@ -11,8 +11,10 @@ import Stevia
 
 class KeyView: UIView {
   
+  var key: Int = 0
   var keyV = UIView()
   var keyLabel = UILabel()
+  var delegate: KeyInputDelegate?
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
@@ -23,27 +25,49 @@ class KeyView: UIView {
   
   func setupView(key: Int) {
     self.sv(keyV)
+    self.key = key
     keyV.height(70).width(70).centerVertically().centerHorizontally()
+    keyV.backgroundColor = .black
     keyV.layer.cornerRadius = 35
-    keyV.layer.borderColor = UIColor.white.cgColor
     keyV.layer.borderWidth = 1
     
     keyV.sv(keyLabel)
     keyLabel.centerHorizontally().centerVertically()
-    keyLabel.text = "\(key)"
+    if key == -1 {
+      keyLabel.text = "<"
+    } else {
+      keyLabel.text = "\(key)"
+      keyV.layer.borderColor = UIColor.white.cgColor
+    }
     keyLabel.textColor = UIColor.white
     keyLabel.font = keyLabel.font.withSize(20)
   }
+  
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    delegate?.handleKeyInput(key: self.key)
+  }
+}
+
+protocol KeyInputDelegate {
+  func handleKeyInput(key: Int)
 }
 
 class PassCodeInputViewController: UIViewController {
+  var passCode: String = ""
   
   var contentView = UIView()
   var keyPadView = UIView()
+  var passCodeView = UIView()
+  var titleLabel = UILabel()
   var keysView1 = UIView()
   var keysView2 = UIView()
   var keysView3 = UIView()
   var keysView4 = UIView()
+  var inputView1 = UIView()
+  var inputView2 = UIView()
+  var inputView3 = UIView()
+  var inputView4 = UIView()
   let key1 = KeyView()
   let key2 = KeyView()
   let key3 = KeyView()
@@ -54,11 +78,13 @@ class PassCodeInputViewController: UIViewController {
   let key8 = KeyView()
   let key9 = KeyView()
   let key0 = KeyView()
+  let backKey = KeyView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupContentView()
-    setupPassCodeView()
     setupKeypadView()
+    setupPassCodeView()
   }
   
   func setupContentView() {
@@ -69,7 +95,42 @@ class PassCodeInputViewController: UIViewController {
     contentView.Right == self.view.safeAreaLayoutGuide.Right
   }
   func setupPassCodeView() {
+    let passCodeViewContainer = UIView()
+    contentView.sv(passCodeViewContainer)
+    passCodeViewContainer.Top == contentView.Top + 100
+    passCodeViewContainer.Bottom == keyPadView.Top
+    passCodeViewContainer.fillHorizontally()
     
+    passCodeViewContainer.sv(titleLabel, passCodeView)
+    
+    titleLabel.centerHorizontally()
+    titleLabel.Top == passCodeViewContainer.Top + 20
+    titleLabel.text = "Enter Passcode"
+    titleLabel.textColor = .white
+    titleLabel.textAlignment = .center
+    titleLabel.font = titleLabel.font.withSize(20)
+    
+    
+    passCodeView.height(100).centerHorizontally().centerVertically()
+    
+    passCodeView.sv(inputView1.style(inputViewStyle), inputView2.style(inputViewStyle), inputView3.style(inputViewStyle), inputView4.style(inputViewStyle))
+    
+    
+    inputView1.Left == passCodeView.Left
+    inputView2.Left == inputView1.Right + 20
+    inputView3.Left == inputView2.Right + 20
+    inputView4.Left == inputView3.Right + 20
+    
+    passCodeView.Right == inputView4.Right
+    
+  }
+  
+  func inputViewStyle(view: UIView) {
+    view.height(10).width(10)
+    view.layer.borderColor = UIColor.white.cgColor
+    view.layer.borderWidth = 0.5
+    view.layer.cornerRadius = 5
+    view.centerVertically()
   }
   
   func setupKeypadView() {
@@ -126,14 +187,105 @@ class PassCodeInputViewController: UIViewController {
     rightKey.Right == keysView1.Right
     
     leftKey.setupView(key: keyValues[0])
+    leftKey.delegate = self
     centerKey.setupView(key: keyValues[1])
+    centerKey.delegate = self
     rightKey.setupView(key: keyValues[2])
+    rightKey.delegate = self
   }
   
   func setupKeyView4() {
-    keysView4.sv(key0)
-    key0.fillContainer()
+    let keyWidth = (UIScreen.main.bounds.width - 40) / 3
+    
+    let emptyView = UIView()
+    
+    keysView4.sv(emptyView, key0, backKey)
+    
+    
+    emptyView.width(keyWidth).fillVertically()
+    key0.width(keyWidth).fillVertically()
+    backKey.width(keyWidth).fillVertically()
+    emptyView.Left == keysView4.Left
+    key0.Left == emptyView.Right
+    backKey.Left == key0.Right
+    backKey.Right == keysView4.Right
+    
+    backKey.setupView(key: -1)
+    backKey.delegate = self
+    
     key0.setupView(key: 0)
+    key0.delegate = self
+    
+    keysView4.sv(key0)
   }
   
+  func wobblePassCode() {
+    UIView.animate(withDuration: 0.05, animations: {
+      self.passCodeView.transform = CGAffineTransform(translationX: 10, y: 0)
+    }) { (c) in
+      if c {
+        
+        UIView.animate(withDuration: 0.1, animations: {
+          self.passCodeView.transform = CGAffineTransform(translationX: -10, y: 0)
+        }, completion: { c1 in
+          if c1 {
+            UIView.animate(withDuration: 0.05, animations: {
+              self.passCodeView.transform = .identity
+            }, completion: nil)
+          }
+        })
+      }
+    }
+  }
+  
+}
+
+
+// protocol extensions
+extension PassCodeInputViewController: KeyInputDelegate {
+  func handleKeyInput(key: Int) {
+    if passCode.count == 4 && key != -1 {
+      self.wobblePassCode()
+      return
+    }
+    if key == -1 {
+      passCode = String(passCode.dropLast())
+    } else {
+      passCode = "\(passCode)\(key)"
+    }
+    switch passCode.count {
+    case 0:
+      inputView1.backgroundColor = .clear
+      inputView2.backgroundColor = .clear
+      inputView3.backgroundColor = .clear
+      inputView4.backgroundColor = .clear
+      break
+    case 1:
+      inputView1.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView2.backgroundColor = .clear
+      inputView3.backgroundColor = .clear
+      inputView4.backgroundColor = .clear
+      break
+    case 2:
+      inputView1.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView2.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView3.backgroundColor = .clear
+      inputView4.backgroundColor = .clear
+      break
+    case 3:
+      inputView1.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView2.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView3.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView4.backgroundColor = .clear
+      break
+    case 4:
+      inputView1.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView2.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView3.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      inputView4.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      break
+    default:
+      break
+    }
+  }
 }
