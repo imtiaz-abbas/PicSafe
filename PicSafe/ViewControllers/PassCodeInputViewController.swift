@@ -67,8 +67,6 @@ class PassCodeInputViewController: UIViewController {
   var passcode1: String = ""
   var passcode2: String = ""
   
-  var isPassCodeAlreadySet: Bool = false
-  
   var contentView = UIView()
   var keyPadView = UIView()
   var passCodeView = UIView()
@@ -108,10 +106,8 @@ class PassCodeInputViewController: UIViewController {
     let passCodeSet = UserDefaults.standard.string(forKey: "passCode") ?? ""
     
     if passCodeSet == "" {
-      isPassCodeAlreadySet = false
       passCodeState = .enterPasscodeToRegister
     } else {
-      isPassCodeAlreadySet = true
       passCodeState = .enterPasscodeToLogin
     }
   }
