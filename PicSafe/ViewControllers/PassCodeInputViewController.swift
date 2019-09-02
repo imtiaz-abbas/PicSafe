@@ -9,6 +9,13 @@
 import UIKit
 import Stevia
 
+enum PassCodeState {
+  case initial
+  case enterPasscodeToRegister
+  case reEnterPasscodeToRegister
+  case enterPasscodeToLogin
+}
+
 class KeyView: UIView {
   
   var key: Int = 0
@@ -55,6 +62,10 @@ protocol KeyInputDelegate {
 
 class PassCodeInputViewController: UIViewController {
   var passCode: String = ""
+  var passCodeState: PassCodeState = .initial
+  
+  var passcode1: String = ""
+  var passcode2: String = ""
   
   var contentView = UIView()
   var keyPadView = UIView()
@@ -82,9 +93,23 @@ class PassCodeInputViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+//    UserDefaults.standard.removeObject(forKey: "passCode")
+    start()
+    
     setupContentView()
     setupKeypadView()
     setupPassCodeView()
+  }
+  
+  func start() {
+    
+    let passCodeSet = UserDefaults.standard.string(forKey: "passCode") ?? ""
+    
+    if passCodeSet == "" {
+      passCodeState = .enterPasscodeToRegister
+    } else {
+      passCodeState = .enterPasscodeToLogin
+    }
   }
   
   func setupContentView() {
@@ -219,6 +244,56 @@ class PassCodeInputViewController: UIViewController {
     keysView4.sv(key0)
   }
   
+  func setPasscode() {
+    if passCodeState == .enterPasscodeToLogin {
+      if passCode == UserDefaults.standard.string(forKey: "passCode") ?? "" {
+        goToNextScreen()
+      } else {
+        wobblePassCode()
+        resetInput()
+      }
+    } else if passCodeState == .enterPasscodeToRegister {
+      passcode1 = passCode
+      passCode = ""
+      titleLabel.text = "Re-enter Passcode"
+      passCodeState = .reEnterPasscodeToRegister
+      resetInput()
+    } else if passCodeState == .reEnterPasscodeToRegister {
+      passcode2 = passCode
+      if passcode1 == passcode2 {
+        UserDefaults.standard.set(passCode, forKey: "passCode")
+        reset()
+        goToNextScreen()
+      } else {
+        titleLabel.text = "Passcode didn't match. Enter Passcode"
+        wobblePassCode()
+        reset()
+        resetInput()
+      }
+    }
+  }
+  
+  func resetInput() {
+    passCode = ""
+    inputView1.backgroundColor = .clear
+    inputView2.backgroundColor = .clear
+    inputView3.backgroundColor = .clear
+    inputView4.backgroundColor = .clear
+  }
+  
+  func reset() {
+    passCode = ""
+    passcode1 = ""
+    passcode2 = ""
+    start()
+  }
+  
+  func goToNextScreen() {
+    self.present(MainViewController(), animated: true) {
+      print("COMPLETED")
+    }
+  }
+  
   func wobblePassCode() {
     UIView.animate(withDuration: 0.05, animations: {
       self.passCodeView.transform = CGAffineTransform(translationX: 10, y: 0)
@@ -283,6 +358,8 @@ extension PassCodeInputViewController: KeyInputDelegate {
       inputView2.backgroundColor = UIColor.white.withAlphaComponent(0.8)
       inputView3.backgroundColor = UIColor.white.withAlphaComponent(0.8)
       inputView4.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+      
+      self.setPasscode()
       break
     default:
       break
