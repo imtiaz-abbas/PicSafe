@@ -16,6 +16,7 @@
 		69D0AAE323193C2B00707ACE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE223193C2B00707ACE /* Assets.xcassets */; };
 		69D0AAE623193C2B00707ACE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE423193C2B00707ACE /* LaunchScreen.storyboard */; };
 		69DBFDA9242F579B0036DBAA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DBFDA8242F579B0036DBAA /* Common.swift */; };
+		69DBFDAB242F7FD50036DBAA /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DBFDAA242F7FD50036DBAA /* PhotoCollectionView.swift */; };
 		B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2031342231CB9D4008716A2 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		69D0AAE523193C2B00707ACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69D0AAE723193C2B00707ACE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69DBFDA8242F579B0036DBAA /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		69DBFDAA242F7FD50036DBAA /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
 		96348297B1B9A586BA34DFF9 /* Pods-PicSafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicSafe.debug.xcconfig"; path = "Target Support Files/Pods-PicSafe/Pods-PicSafe.debug.xcconfig"; sourceTree = "<group>"; };
 		A8321CDFAC95B5837A21C0A8 /* Pods-PicSafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicSafe.release.xcconfig"; path = "Target Support Files/Pods-PicSafe/Pods-PicSafe.release.xcconfig"; sourceTree = "<group>"; };
 		B2031342231CB9D4008716A2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			children = (
 				694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */,
 				B2031342231CB9D4008716A2 /* MainViewController.swift */,
+				69DBFDAA242F7FD50036DBAA /* PhotoCollectionView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				694C292E23194B82008D84E6 /* PassCodeInputViewController.swift in Sources */,
 				69D0AAE123193C2A00707ACE /* PicSafe.xcdatamodeld in Sources */,
 				69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */,
+				69DBFDAB242F7FD50036DBAA /* PhotoCollectionView.swift in Sources */,
 				69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */,
 				69DBFDA9242F579B0036DBAA /* Common.swift in Sources */,
 				B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */,

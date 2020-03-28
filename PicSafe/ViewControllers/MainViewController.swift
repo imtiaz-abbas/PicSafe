@@ -42,31 +42,25 @@ class MainViewController: UIViewController {
   }
   
   @objc func showHiddenPhotos(_ sender: UIButton) {
-    let hiddenAssetsCount = CommonStorage.shared.retrieveNumber(forKey: "hiddenAssetsCount")
-    if (hiddenAssetsCount > 0) {
-      for i in 0...hiddenAssetsCount-1 {
-        let key = "deleted_image_\(i)"
-        let uiImage = CommonStorage.shared.retrieveImage(forKey: key, inStorageType: .fileSystem)
-        imageView.image = uiImage
-        self.reloadInputViews()
-      }
+    self.present(PhotoCollectionViewController(), animated: true) {
+      print("Navigated to photo collection view screen")
     }
   }
   
   private func onImagesSelected() {
     let assetsToBeDeleted: NSMutableArray! = NSMutableArray()
     CommonStorage.shared.storeNumber(count: selectedAssets.count, forKey: "hiddenAssetsCount")
-    var index = 0
+    var uiImages: [UIImage] = []
     selectedAssets.forEach { (asset) in
       let phAsset = asset.phAsset
       assetsToBeDeleted.add(phAsset)
       let fullResolutionImage = asset.fullResolutionImage
       if let image = fullResolutionImage {
-        let key = "deleted_image_\(index)"
-        CommonStorage.shared.storeImage(image: image, forKey: key, withStorageType: .fileSystem)
+        uiImages.append(image)
       }
-      index += 1
     }
+    // storing all images bulk
+    CommonStorage.shared.storeImages(images: uiImages, forKey: "bulkHiddenImages")
     self.deleteAssets(assetsToBeDeleted: assetsToBeDeleted)
   }
   

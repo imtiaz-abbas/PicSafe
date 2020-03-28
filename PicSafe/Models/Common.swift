@@ -29,12 +29,28 @@ class CommonStorage {
     return 0
   }
   
-  func storeImages(images: [UIImage], forKey key: String, withStorageType storageType: StorageType) {
-    
+  func storeImages(images: [UIImage], forKey key: String) {
+    var jpegRepresentations: [Data] = []
+    images.forEach { (image) in
+      if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
+        jpegRepresentations.append(jpegRepresentation)
+      }
+    }
+    UserDefaults.standard.set(jpegRepresentations, forKey: key)
   }
   
-  func retrieveImages(forKey key: String, inStorageType storageType: StorageType) -> [UIImage]? {
-    return []
+  func retrieveImages(forKey key: String) -> [UIImage]? {
+    var uiImages: [UIImage] = []
+    if let imagesData = UserDefaults.standard.object(forKey: key) as? [Data] {
+      imagesData.forEach({ (imageData) in
+        if let image = UIImage(data: imageData) {
+          uiImages.append(image)
+        }
+      })
+      return uiImages
+    } else {
+      return []
+    }
   }
   
   public func storeImage(image: UIImage, forKey key: String, withStorageType storageType: StorageType) {
