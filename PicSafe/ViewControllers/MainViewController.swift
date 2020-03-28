@@ -2,8 +2,8 @@
 //  MainViewController.swift
 //  PicSafe
 //
-//  Created by imtiaz abbas on 02/09/19.
-//  Copyright © 2019 Able. All rights reserved.
+//  Created by Imtiaz Abbas on 02/09/19.
+//  Copyright © 2019 Imtiaz Abbas. All rights reserved.
 //
 
 import UIKit
@@ -42,29 +42,41 @@ class MainViewController: UIViewController {
   }
   
   @objc func showHiddenPhotos(_ sender: UIButton) {
-    let uiImage = CommonStorage.shared.retrieveImage(forKey: "deleted_image", inStorageType: .fileSystem)
-    imageView.image = uiImage
-    self.reloadInputViews()
-  }
-  
-  func onImagesSelected() {
-    let delShotsAsset: NSMutableArray! = NSMutableArray()
-    selectedAssets.forEach { (asset) in
-      let phAsset = asset.phAsset
-      delShotsAsset.add(phAsset)
-      let fullResolutionImage = asset.fullResolutionImage
-      if let image = fullResolutionImage {
-        CommonStorage.shared.storeImage(image: image, forKey: "deleted_image", withStorageType: .fileSystem)
+    let hiddenAssetsCount = CommonStorage.shared.retrieveNumber(forKey: "hiddenAssetsCount")
+    if (hiddenAssetsCount > 0) {
+      for i in 0...hiddenAssetsCount-1 {
+        let key = "deleted_image_\(i)"
+        let uiImage = CommonStorage.shared.retrieveImage(forKey: key, inStorageType: .fileSystem)
+        imageView.image = uiImage
+        self.reloadInputViews()
       }
     }
+  }
+  
+  private func onImagesSelected() {
+    let assetsToBeDeleted: NSMutableArray! = NSMutableArray()
+    CommonStorage.shared.storeNumber(count: selectedAssets.count, forKey: "hiddenAssetsCount")
+    var index = 0
+    selectedAssets.forEach { (asset) in
+      let phAsset = asset.phAsset
+      assetsToBeDeleted.add(phAsset)
+      let fullResolutionImage = asset.fullResolutionImage
+      if let image = fullResolutionImage {
+        let key = "deleted_image_\(index)"
+        CommonStorage.shared.storeImage(image: image, forKey: key, withStorageType: .fileSystem)
+      }
+      index += 1
+    }
+    self.deleteAssets(assetsToBeDeleted: assetsToBeDeleted)
+  }
+  
+  private func deleteAssets(assetsToBeDeleted assets: NSMutableArray) {
     PHPhotoLibrary.shared().performChanges({
-      //Delete Photo
-      PHAssetChangeRequest.deleteAssets(delShotsAsset)
+      PHAssetChangeRequest.deleteAssets(assets)
     },
      completionHandler: {(success, error)in
-      NSLog("\nDeleted Image -> %@", (success ? "Success":"Error!"))
+      NSLog("Image Deletion -> %@", (success ? "Success":"Error!"))
       if(success){
-        // Move to the main thread to execute
         DispatchQueue.main.async {
           print("Trashed")
         }

@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  PicSafe
 //
-//  Created by Able on 30/08/19.
-//  Copyright © 2019 Able. All rights reserved.
+//  Created by Imtiaz Abbas on 30/08/19.
+//  Copyright © 2019 Imtiaz Abbas. All rights reserved.
 //
 
 import UIKit
