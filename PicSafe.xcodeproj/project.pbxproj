@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4888806F9CAEAC8721240201 /* libPods-PicSafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3406955DCEE78050CC302986 /* libPods-PicSafe.a */; };
 		694C292E23194B82008D84E6 /* PassCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */; };
 		69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AAD823193C2A00707ACE /* AppDelegate.swift */; };
 		69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AADA23193C2A00707ACE /* ViewController.swift */; };
@@ -15,11 +16,10 @@
 		69D0AAE323193C2B00707ACE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE223193C2B00707ACE /* Assets.xcassets */; };
 		69D0AAE623193C2B00707ACE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE423193C2B00707ACE /* LaunchScreen.storyboard */; };
 		B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2031342231CB9D4008716A2 /* MainViewController.swift */; };
-		FDEE9C331B2455E70386E7A5 /* Pods_PicSafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065C680E66710A3D4C4D5EFA /* Pods_PicSafe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		065C680E66710A3D4C4D5EFA /* Pods_PicSafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PicSafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3406955DCEE78050CC302986 /* libPods-PicSafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PicSafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeInputViewController.swift; sourceTree = "<group>"; };
 		69D0AAD523193C2A00707ACE /* PicSafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicSafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D0AAD823193C2A00707ACE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDEE9C331B2455E70386E7A5 /* Pods_PicSafe.framework in Frameworks */,
+				4888806F9CAEAC8721240201 /* libPods-PicSafe.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,7 +49,7 @@
 		22D96EDBFF9FF957C0D8F613 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				065C680E66710A3D4C4D5EFA /* Pods_PicSafe.framework */,
+				3406955DCEE78050CC302986 /* libPods-PicSafe.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -116,7 +116,7 @@
 				69D0AAD123193C2A00707ACE /* Sources */,
 				69D0AAD223193C2A00707ACE /* Frameworks */,
 				69D0AAD323193C2A00707ACE /* Resources */,
-				6EE22BB370C06066BDF51BFE /* [CP] Embed Pods Frameworks */,
+				528482899A6B9AE0A86DE56A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,21 +196,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6EE22BB370C06066BDF51BFE /* [CP] Embed Pods Frameworks */ = {
+		528482899A6B9AE0A86DE56A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PicSafe/Pods-PicSafe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

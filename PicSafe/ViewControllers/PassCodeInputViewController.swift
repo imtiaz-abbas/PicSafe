@@ -290,7 +290,7 @@ class PassCodeInputViewController: UIViewController {
   
   func goToNextScreen() {
     self.present(MainViewController(), animated: true) {
-      print("COMPLETED")
+      print("Navigated to main screen")
     }
   }
   
