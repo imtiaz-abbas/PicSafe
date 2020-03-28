@@ -15,6 +15,7 @@
 		69D0AAE123193C2A00707ACE /* PicSafe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AADF23193C2A00707ACE /* PicSafe.xcdatamodeld */; };
 		69D0AAE323193C2B00707ACE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE223193C2B00707ACE /* Assets.xcassets */; };
 		69D0AAE623193C2B00707ACE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AAE423193C2B00707ACE /* LaunchScreen.storyboard */; };
+		69DBFDA9242F579B0036DBAA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DBFDA8242F579B0036DBAA /* Common.swift */; };
 		B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2031342231CB9D4008716A2 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		69D0AAE223193C2B00707ACE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69D0AAE523193C2B00707ACE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69D0AAE723193C2B00707ACE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69DBFDA8242F579B0036DBAA /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		96348297B1B9A586BA34DFF9 /* Pods-PicSafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicSafe.debug.xcconfig"; path = "Target Support Files/Pods-PicSafe/Pods-PicSafe.debug.xcconfig"; sourceTree = "<group>"; };
 		A8321CDFAC95B5837A21C0A8 /* Pods-PicSafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PicSafe.release.xcconfig"; path = "Target Support Files/Pods-PicSafe/Pods-PicSafe.release.xcconfig"; sourceTree = "<group>"; };
 		B2031342231CB9D4008716A2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		69D0AAD723193C2A00707ACE /* PicSafe */ = {
 			isa = PBXGroup;
 			children = (
+				69DBFDA7242F57820036DBAA /* Models */,
 				694C292A23194B6E008D84E6 /* ViewControllers */,
 				69D0AAD823193C2A00707ACE /* AppDelegate.swift */,
 				69D0AAE223193C2B00707ACE /* Assets.xcassets */,
@@ -94,6 +97,14 @@
 				69D0AADA23193C2A00707ACE /* ViewController.swift */,
 			);
 			path = PicSafe;
+			sourceTree = "<group>";
+		};
+		69DBFDA7242F57820036DBAA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				69DBFDA8242F579B0036DBAA /* Common.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		762C46073CC60E4A05BB5084 /* Pods */ = {
@@ -224,6 +235,7 @@
 				69D0AAE123193C2A00707ACE /* PicSafe.xcdatamodeld in Sources */,
 				69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */,
 				69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */,
+				69DBFDA9242F579B0036DBAA /* Common.swift in Sources */,
 				B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

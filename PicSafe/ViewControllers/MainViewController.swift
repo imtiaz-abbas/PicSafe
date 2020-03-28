@@ -14,26 +14,48 @@ import Photos
 
 class MainViewController: UIViewController {
   var selectedAssets = [TLPHAsset]()
+  var  imageView = UIImageView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     let button = UIButton(type: .system)
-    
-    self.view.sv(button)
+    let button2 = UIButton(type: .system)
+    self.view.sv(button, button2, imageView)
     // style button
     
     button.Top == 30
     button.centerHorizontally()
     button.text("Hide photos")
     
+    button2.Top == button.Bottom + 20
+    button2.centerHorizontally()
+    button2.text("Show hidden photos")
+    
+    imageView.Top == button2.Bottom + 20
+    imageView.Bottom == self.view.Bottom - 20
+    imageView.Right == self.view.Right - 20
+    imageView.Left == self.view.Left + 20
+    
     button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+    button2.addTarget(self, action: #selector(showHiddenPhotos), for: .touchUpInside)
+  }
+  
+  @objc func showHiddenPhotos(_ sender: UIButton) {
+    let uiImage = CommonStorage.shared.retrieveImage(forKey: "deleted_image", inStorageType: .fileSystem)
+    imageView.image = uiImage
+    self.reloadInputViews()
   }
   
   func onImagesSelected() {
-    var delShotsAsset: NSMutableArray! = NSMutableArray()
+    let delShotsAsset: NSMutableArray! = NSMutableArray()
     selectedAssets.forEach { (asset) in
       let phAsset = asset.phAsset
       delShotsAsset.add(phAsset)
+      let fullResolutionImage = asset.fullResolutionImage
+      if let image = fullResolutionImage {
+        CommonStorage.shared.storeImage(image: image, forKey: "deleted_image", withStorageType: .fileSystem)
+      }
     }
     PHPhotoLibrary.shared().performChanges({
       //Delete Photo
@@ -75,9 +97,10 @@ extension MainViewController: TLPhotosPickerViewControllerDelegate {
     // picker viewcontroller dismiss completion
   }
   func canSelectAsset(phAsset: PHAsset) -> Bool {
-    //Custom Rules & Display
-    //You can decide in which case the selection of the cell could be forbidden.
-    return true
+    if (phAsset.mediaType == .image) {
+      return true
+    }
+    return false
   }
   func didExceedMaximumNumberOfSelection(picker: TLPhotosPickerViewController) {
     // exceed max selection
