@@ -289,9 +289,7 @@ class PassCodeInputViewController: UIViewController {
   }
   
   func goToNextScreen() {
-    self.present(MainViewController(), animated: true) {
-      print("Navigated to main screen")
-    }
+    self.navigationController?.pushViewController(MainViewController(), animated: true)
   }
   
   func wobblePassCode() {

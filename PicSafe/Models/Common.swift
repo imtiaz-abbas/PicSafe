@@ -29,13 +29,24 @@ class CommonStorage {
     return 0
   }
   
-  func storeImages(images: [UIImage], forKey key: String) {
+  func storeImages(images: [UIImage], forKey key: String, noExisting: Bool = false) {
     var jpegRepresentations: [Data] = []
     images.forEach { (image) in
       if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
         jpegRepresentations.append(jpegRepresentation)
       }
     }
+    let existingImages = retrieveImages(forKey: key)
+    
+    // append existing images to newly added images to jpegRepresentations array
+    if (!noExisting) {
+      existingImages?.forEach({ (image) in
+        if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
+          jpegRepresentations.append(jpegRepresentation)
+        }
+      })
+    }
+    // store array of jpegRepresentations to UserDefaults
     UserDefaults.standard.set(jpegRepresentations, forKey: key)
   }
   

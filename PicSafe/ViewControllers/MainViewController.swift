@@ -18,13 +18,13 @@ class MainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = .white
+    self.view.backgroundColor = UIColor.init(red: 1/26, green: 0, blue: 0, alpha: 1)
     let button = UIButton(type: .system)
     let button2 = UIButton(type: .system)
     self.view.sv(button, button2, imageView)
     // style button
     
-    button.Top == 30
+    button.Top == self.view.safeAreaLayoutGuide.Top + 20
     button.centerHorizontally()
     button.text("Hide photos")
     
@@ -42,9 +42,7 @@ class MainViewController: UIViewController {
   }
   
   @objc func showHiddenPhotos(_ sender: UIButton) {
-    self.present(PhotoCollectionViewController(), animated: true) {
-      print("Navigated to photo collection view screen")
-    }
+    navigationController?.pushViewController(PhotoCollectionViewController(), animated: true)
   }
   
   private func onImagesSelected() {
