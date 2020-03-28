@@ -24,8 +24,8 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
     super.viewWillAppear(animated)
     
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-    layout.itemSize = CGSize(width: 60, height: 60)
+    layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 10, right: 20)
+    layout.itemSize = CGSize(width: 100, height: 100)
     
     let myCollectionView:UICollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
     myCollectionView.dataSource = self
