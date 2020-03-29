@@ -12,8 +12,8 @@ import Stevia
 
 class PhotoDetailViewController: UIViewController {
   
-  var uiImage: UIImage?
-  func setImage(image: UIImage) {
+  var uiImage: Data?
+  func setImage(image: Data) {
     self.uiImage = image
   }
   
@@ -30,7 +30,7 @@ class PhotoDetailViewController: UIViewController {
       self.imageView.Bottom == self.view.Bottom - 20
       self.imageView.Left == self.view.Left
       self.imageView.Right == self.view.Right
-      self.imageView.image = image
+      self.imageView.image = UIImage(data: image)
       self.view.backgroundColor = .black
       self.imageView.contentMode  = .scaleAspectFit
     }
@@ -65,35 +65,38 @@ class PhotoDetailViewController: UIViewController {
   }
   
   @objc func unhideButtonClickAction() {
-    if let image = uiImage {
-      UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    if let uiImageData = uiImage {
+      if let image = UIImage(data: uiImageData) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+      }
     }
   }
   
   @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-      if let error = error {
-          // we got back an error!
-          let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-          ac.addAction(UIAlertAction(title: "OK", style: .default))
-          present(ac, animated: true)
-      } else {
-//          deleteButtonClickAction()
-          let ac = UIAlertController(title: "Saved!", message: "Your photo is now recovered and can be viewed in your photos", preferredStyle: .alert)
-          ac.addAction(UIAlertAction(title: "OK", style: .default))
-          present(ac, animated: true)
+    if let error = error {
+      // we got back an error!
+      let ac = UIAlertController(title: "Unable to restore your photo. Please contact support.", message: error.localizedDescription, preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "OK", style: .default))
+      present(ac, animated: true)
+    } else {
+      //          deleteButtonClickAction()
+      let ac = UIAlertController(title: "Saved!", message: "Your photo is now recovered and can be viewed in your photos", preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "OK", style: .default))
+      
+      if let uiImageData = uiImage {
+        ImageStore.shared.removeImage(uiImage: uiImageData)
+        if let navController = self.navigationController {
+          navController.popViewController(animated: true)
+        }
       }
+      present(ac, animated: true)
+    }
   }
   
   @objc func deleteButtonClickAction() {
-    let images = CommonStorage.shared.retrieveImages(forKey: "bulkHiddenImages")
-    var filteredImages: [UIImage] = []
-    images?.forEach({ (x) in
-      let jpegData = x.jpegData(compressionQuality: .greatestFiniteMagnitude)
-      if (jpegData != uiImage?.jpegData(compressionQuality: .greatestFiniteMagnitude)) {
-        filteredImages.append(x)
-      }
-    })
-    CommonStorage.shared.storeImages(images: filteredImages, forKey: "bulkHiddenImages", noExisting: true)
+    if let uiImageData = uiImage {
+      ImageStore.shared.removeImage(uiImage: uiImageData)
+    }
     if let navController = self.navigationController {
       navController.popViewController(animated: true)
     }

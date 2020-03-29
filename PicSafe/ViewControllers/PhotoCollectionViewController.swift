@@ -11,11 +11,11 @@ import UIKit
 import Stevia
 
 protocol ImageCollectionViewCellDelegate {
-  func onImageClicked(image: UIImage)
+  func onImageClicked(image: Data)
 }
 
 class PhotoCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-  var images: [UIImage] = []
+  var images: [Data] = []
   
   
   override func viewDidLoad() {
@@ -28,9 +28,7 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if let images = CommonStorage.shared.retrieveImages(forKey: "bulkHiddenImages") {
-      self.images = images
-    }
+    self.images = ImageStore.shared.getImages()
     let leftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeToLogin))
     leftGesture.direction = .right
     self.view.addGestureRecognizer(leftGesture)
@@ -74,7 +72,7 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath as IndexPath) as! ImageCollectionViewCell
-    myCell.setupView(uiImage: images[indexPath.row])
+    myCell.setupView(uiImageData: images[indexPath.row])
     myCell.delegate = self
     return myCell
   }
@@ -92,7 +90,7 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
 }
 
 extension PhotoCollectionViewController: ImageCollectionViewCellDelegate {
-  func onImageClicked(image: UIImage) {
+  func onImageClicked(image: Data) {
     let photoDetailViewController = PhotoDetailViewController()
     photoDetailViewController.setImage(image: image)
     navigationController?.pushViewController(photoDetailViewController, animated: true)
@@ -103,10 +101,13 @@ extension PhotoCollectionViewController: ImageCollectionViewCellDelegate {
 
 class ImageCollectionViewCell: UICollectionViewCell {
   var delegate: ImageCollectionViewCellDelegate?
+  var imageData: Data?
   
-  func setupView(uiImage: UIImage) {
+  func setupView(uiImageData: Data) {
+    self.imageData = uiImageData
     let imageView = UIImageView()
     self.sv(imageView)
+    let uiImage = UIImage(data: uiImageData)
     imageView.image = uiImage
     
     // styles
@@ -129,7 +130,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
   @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
   {
     if let tappedImage = (tapGestureRecognizer.view as! UIImageView).image {
-      delegate?.onImageClicked(image: tappedImage)
+      if let imageData = self.imageData {
+        delegate?.onImageClicked(image: imageData)
+      }
     }
   }
 }

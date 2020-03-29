@@ -48,17 +48,17 @@ class MainViewController: UIViewController {
   private func onImagesSelected() {
     let assetsToBeDeleted: NSMutableArray! = NSMutableArray()
     CommonStorage.shared.storeNumber(count: selectedAssets.count, forKey: "hiddenAssetsCount")
-    var uiImages: [UIImage] = []
+    var uiImages: [Data] = []
     selectedAssets.forEach { (asset) in
       let phAsset = asset.phAsset
       assetsToBeDeleted.add(phAsset)
       let fullResolutionImage = asset.fullResolutionImage
-      if let image = fullResolutionImage {
+      if let image = fullResolutionImage?.jpegData(compressionQuality: .greatestFiniteMagnitude) {
         uiImages.append(image)
       }
     }
     // storing all images bulk
-    CommonStorage.shared.storeImages(images: uiImages, forKey: "bulkHiddenImages")
+    ImageStore.shared.storeImages(imagesToBeStored: uiImages)
     self.deleteAssets(assetsToBeDeleted: assetsToBeDeleted)
   }
   

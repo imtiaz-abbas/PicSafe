@@ -29,67 +29,56 @@ class CommonStorage {
     return 0
   }
   
-  func storeImages(images: [UIImage], forKey key: String, noExisting: Bool = false) {
+  func storeImages(images: [Data], forKey key: String, noExisting: Bool = false) {
     var jpegRepresentations: [Data] = []
     images.forEach { (image) in
-      if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
-        jpegRepresentations.append(jpegRepresentation)
-      }
+      jpegRepresentations.append(image)
     }
     let existingImages = retrieveImages(forKey: key)
     
     // append existing images to newly added images to jpegRepresentations array
     if (!noExisting) {
       existingImages?.forEach({ (image) in
-        if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
-          jpegRepresentations.append(jpegRepresentation)
-        }
+        jpegRepresentations.append(image)
       })
     }
     // store array of jpegRepresentations to UserDefaults
     UserDefaults.standard.set(jpegRepresentations, forKey: key)
   }
   
-  func retrieveImages(forKey key: String) -> [UIImage]? {
-    var uiImages: [UIImage] = []
+  func retrieveImages(forKey key: String) -> [Data]? {
     if let imagesData = UserDefaults.standard.object(forKey: key) as? [Data] {
-      imagesData.forEach({ (imageData) in
-        if let image = UIImage(data: imageData) {
-          uiImages.append(image)
-        }
-      })
-      return uiImages
+      return imagesData
     } else {
       return []
     }
   }
   
-  public func storeImage(image: UIImage, forKey key: String, withStorageType storageType: StorageType) {
-    if let jpegRepresentation = image.jpegData(compressionQuality: .greatestFiniteMagnitude) {
-      switch storageType {
-      case .fileSystem:
-        if let filePath = filePath(forKey: key) {
-          do  {
-            try jpegRepresentation.write(to: filePath,
-                                        options: .atomic)
-          } catch let err {
-            print("Saving file resulted in error: ", err)
-          }
+  public func storeImage(image: Data, forKey key: String, withStorageType storageType: StorageType) {
+    
+    switch storageType {
+    case .fileSystem:
+      if let filePath = filePath(forKey: key) {
+        do  {
+          try image.write(to: filePath,
+                                       options: .atomic)
+        } catch let err {
+          print("Saving file resulted in error: ", err)
         }
-        
-      case .userDefaults:
-        UserDefaults.standard.set(jpegRepresentation, forKey: key)
       }
+      
+    case .userDefaults:
+      UserDefaults.standard.set(image, forKey: key)
     }
   }
-
+  
   public func retrieveImage(forKey key: String, inStorageType storageType: StorageType) -> UIImage? {
     switch storageType {
     case .fileSystem:
       if let filePath = filePath(forKey: key),
-          let fileData = FileManager.default.contents(atPath: filePath.path),
-          let image = UIImage(data: fileData) {
-          return image
+        let fileData = FileManager.default.contents(atPath: filePath.path),
+        let image = UIImage(data: fileData) {
+        return image
       }
     case .userDefaults:
       if let imageData = UserDefaults.standard.object(forKey: key) as? Data,
@@ -99,7 +88,7 @@ class CommonStorage {
     }
     return nil
   }
-
+  
   private func filePath(forKey key: String) -> URL? {
     let fileManager = FileManager.default
     guard let documentURL = fileManager.urls(for: .documentDirectory,

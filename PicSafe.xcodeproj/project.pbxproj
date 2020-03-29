@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4888806F9CAEAC8721240201 /* libPods-PicSafe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3406955DCEE78050CC302986 /* libPods-PicSafe.a */; };
 		694C292E23194B82008D84E6 /* PassCodeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */; };
+		69CD3DFA2430840E00C3C8EF /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CD3DF92430840E00C3C8EF /* ImageStore.swift */; };
 		69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AAD823193C2A00707ACE /* AppDelegate.swift */; };
 		69D0AADB23193C2A00707ACE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D0AADA23193C2A00707ACE /* ViewController.swift */; };
 		69D0AADE23193C2A00707ACE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69D0AADC23193C2A00707ACE /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		3406955DCEE78050CC302986 /* libPods-PicSafe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PicSafe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		694C292D23194B82008D84E6 /* PassCodeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassCodeInputViewController.swift; sourceTree = "<group>"; };
+		69CD3DF92430840E00C3C8EF /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		69D0AAD523193C2A00707ACE /* PicSafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicSafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D0AAD823193C2A00707ACE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69D0AADA23193C2A00707ACE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				69DBFDA8242F579B0036DBAA /* Common.swift */,
+				69CD3DF92430840E00C3C8EF /* ImageStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				69DBFDAB242F7FD50036DBAA /* PhotoCollectionViewController.swift in Sources */,
 				69D0AAD923193C2A00707ACE /* AppDelegate.swift in Sources */,
 				69DBFDA9242F579B0036DBAA /* Common.swift in Sources */,
+				69CD3DFA2430840E00C3C8EF /* ImageStore.swift in Sources */,
 				B2031343231CB9D4008716A2 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
