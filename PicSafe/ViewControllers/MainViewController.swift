@@ -51,15 +51,19 @@ class MainViewController: UIViewController {
     var uiImages: [Data] = []
     selectedAssets.forEach { (asset) in
       let phAsset = asset.phAsset
-      assetsToBeDeleted.add(phAsset)
-      let fullResolutionImage = asset.fullResolutionImage
-      if let image = fullResolutionImage?.jpegData(compressionQuality: .greatestFiniteMagnitude) {
-        uiImages.append(image)
+      asset.cloudImageDownload(progressBlock: { (progress) in
+        print("==== progress ", progress)
+      }) { (downloadedImage) in
+        if let image = downloadedImage?.jpegData(compressionQuality: .greatestFiniteMagnitude) {
+          assetsToBeDeleted.add(phAsset)
+          uiImages.append(image)
+          if (uiImages.count == self.selectedAssets.count) {
+            ImageStore.shared.storeImages(imagesToBeStored: uiImages)
+            self.deleteAssets(assetsToBeDeleted: assetsToBeDeleted)
+          }
+        }
       }
     }
-    // storing all images bulk
-    ImageStore.shared.storeImages(imagesToBeStored: uiImages)
-    self.deleteAssets(assetsToBeDeleted: assetsToBeDeleted)
   }
   
   private func deleteAssets(assetsToBeDeleted assets: NSMutableArray) {
