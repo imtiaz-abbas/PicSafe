@@ -14,31 +14,46 @@ import Photos
 
 class MainViewController: UIViewController {
   var selectedAssets = [TLPHAsset]()
-  var  imageView = UIImageView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = UIColor.init(red: 1/26, green: 0, blue: 0, alpha: 1)
-    let button = UIButton(type: .system)
-    let button2 = UIButton(type: .system)
-    self.view.sv(button, button2, imageView)
+    let button = UIButton(type: .contactAdd)
+    let albumsView = UIView()
+    let photosAlbumView = UIView()
+    let photosText = UITextField()
+    
+    self.view.sv(button, albumsView)
+    albumsView.sv(photosAlbumView)
+    
+    photosAlbumView.height(150).width(150)
+    photosAlbumView.backgroundColor = .black
+    photosAlbumView.layer.borderColor = UIColor.white.cgColor
+    photosAlbumView.layer.borderWidth = 1
+    photosAlbumView.sv(photosText)
+    
+    photosAlbumView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showHiddenPhotos(_:))))
+    photosAlbumView.isUserInteractionEnabled = true
+    
+    photosText.fillContainer()
+    photosText.textAlignment = .center
+    photosText.text = "Photos"
+    photosText.isEnabled = false
+    photosText.font = UIFont.boldSystemFont(ofSize: 18)
+    photosText.textColor = .systemBlue
+    
     // style button
     
-    button.Top == self.view.safeAreaLayoutGuide.Top + 20
+    albumsView.Top == self.view.safeAreaLayoutGuide.Top + 50
+    albumsView.Left == self.view.safeAreaLayoutGuide.Left + 20
+    albumsView.Right == self.view.safeAreaLayoutGuide.Right - 20
+    albumsView.Bottom == button.Top
+    
+    button.Bottom == self.view.safeAreaLayoutGuide.Bottom - 20
     button.centerHorizontally()
-    button.text("Hide photos")
-    
-    button2.Top == button.Bottom + 20
-    button2.centerHorizontally()
-    button2.text("Show hidden photos")
-    
-    imageView.Top == button2.Bottom + 20
-    imageView.Bottom == self.view.Bottom - 20
-    imageView.Right == self.view.Right - 20
-    imageView.Left == self.view.Left + 20
+    button.text(" Hide photos")
     
     button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-    button2.addTarget(self, action: #selector(showHiddenPhotos), for: .touchUpInside)
   }
   
   @objc func showHiddenPhotos(_ sender: UIButton) {

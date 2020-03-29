@@ -39,5 +39,6 @@ class ImageStore {
     imagesToBeStored.forEach { (x) in
       self.imagesData.append(x)
     }
+    CommonStorage.shared.storeImages(images: self.imagesData, forKey: "bulkHiddenImages", noExisting: true)
   }
 }
