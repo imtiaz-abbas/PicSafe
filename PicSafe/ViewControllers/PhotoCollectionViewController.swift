@@ -39,10 +39,11 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
     self.view.subviews.forEach { (x) in
       x.removeFromSuperview()
     }
+    let collectionViewWidth = self.view.frame.width - 40
     let title = UITextView()
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 10, right: 20)
-    layout.itemSize = CGSize(width: 100, height: 100)
+    layout.itemSize = CGSize(width: collectionViewWidth/3-8, height: collectionViewWidth/3-8)
     
     let myCollectionView:UICollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
     myCollectionView.dataSource = self
