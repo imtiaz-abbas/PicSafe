@@ -65,8 +65,25 @@ class PhotoDetailViewController: UIViewController {
   }
   
   @objc func unhideButtonClickAction() {
-    // todo unhide
+    if let image = uiImage {
+      UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
   }
+  
+  @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+      if let error = error {
+          // we got back an error!
+          let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+          ac.addAction(UIAlertAction(title: "OK", style: .default))
+          present(ac, animated: true)
+      } else {
+//          deleteButtonClickAction()
+          let ac = UIAlertController(title: "Saved!", message: "Your photo is now recovered and can be viewed in your photos", preferredStyle: .alert)
+          ac.addAction(UIAlertAction(title: "OK", style: .default))
+          present(ac, animated: true)
+      }
+  }
+  
   @objc func deleteButtonClickAction() {
     let images = CommonStorage.shared.retrieveImages(forKey: "bulkHiddenImages")
     var filteredImages: [UIImage] = []

@@ -62,7 +62,7 @@ class PhotoCollectionViewController: UIViewController, UICollectionViewDataSourc
     myCollectionView.Top == title.Bottom
     myCollectionView.Bottom == self.view.Bottom
     
-    title.text = "HIDDEN PHOTOS"
+    title.text = "HIDDEN PHOTOS (\(images.count))"
     title.textColor = .white
     title.textAlignment = .center
     
