@@ -33,9 +33,9 @@ class KeyView: UIView {
   func setupView(key: Int) {
     self.sv(keyV)
     self.key = key
-    keyV.height(70).width(70).centerVertically().centerHorizontally()
-    keyV.backgroundColor = .black
-    keyV.layer.cornerRadius = 35
+    keyV.height(90).width(90).centerVertically().centerHorizontally()
+    keyV.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+    keyV.layer.cornerRadius = 45
     keyV.layer.borderWidth = 1
     
     keyV.sv(keyLabel)
@@ -44,15 +44,18 @@ class KeyView: UIView {
       keyLabel.text = "<"
     } else {
       keyLabel.text = "\(key)"
-      keyV.layer.borderColor = UIColor.white.cgColor
     }
-    keyLabel.textColor = UIColor.white
+    keyLabel.textColor = .white
     keyLabel.font = keyLabel.font.withSize(20)
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    keyV.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+  }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     delegate?.handleKeyInput(key: self.key)
+    keyV.backgroundColor = UIColor.white.withAlphaComponent(0.1)
   }
 }
 
@@ -129,7 +132,7 @@ class PassCodeInputViewController: UIViewController {
     passCodeViewContainer.sv(titleLabel, passCodeView)
     
     titleLabel.centerHorizontally()
-    titleLabel.Top == passCodeViewContainer.Top + 20
+    titleLabel.Top == passCodeViewContainer.Top + 50
     titleLabel.text = "Enter Passcode"
     titleLabel.textColor = .white
     titleLabel.textAlignment = .center
@@ -151,10 +154,10 @@ class PassCodeInputViewController: UIViewController {
   }
   
   func inputViewStyle(view: UIView) {
-    view.height(10).width(10)
+    view.height(16).width(16)
     view.layer.borderColor = UIColor.white.cgColor
-    view.layer.borderWidth = 0.5
-    view.layer.cornerRadius = 5
+    view.layer.borderWidth = 1
+    view.layer.cornerRadius = 8
     view.centerVertically()
   }
   
